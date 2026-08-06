@@ -1,0 +1,13 @@
+FROM frolvlad/alpine-python3:latest
+
+RUN apk add --no-cache git python3 py3-pip
+
+# کلون MTProto Proxy
+RUN git clone https://github.com/alexander-akbotov/telegram-proxy.git /opt/proxy
+
+WORKDIR /opt/proxy
+RUN pip3 install aiohttp
+
+EXPOSE 443
+
+CMD ["python3", "main.py"]
