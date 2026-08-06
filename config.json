@@ -1,6 +1,6 @@
 {
     "log": {
-        "loglevel": "warning"
+        "loglevel": "none"
     },
     "inbounds": [
         {
@@ -11,22 +11,35 @@
             "settings": {
                 "clients": [
                     {
-                        "id": "32852448-e285-465d-aa0c-f41f1ccb4e5b"
+                        "id": "9d509ca5-e544-46e4-be57-613b240299d1",
+                        "flow": "xtls-rprx-vision"
                     }
                 ],
                 "decryption": "none"
             },
             "streamSettings": {
-                "network": "ws",
-                "wsSettings": {
-                    "path": "/hermes-vpn"
+                "network": "xhttp",
+                "xhttpSettings": {
+                    "path": "/api/v1",
+                    "mode": "packet-up"
+                },
+                "security": "tls",
+                "tlsSettings": {
+                    "serverName": "hermes-vpn-production.up.railway.app",
+                    "alpn": ["h2", "http/1.1"],
+                    "fingerprint": "chrome"
                 }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": ["http", "tls"]
             }
         }
     ],
     "outbounds": [
         {
-            "protocol": "freedom"
+            "protocol": "freedom",
+            "tag": "direct"
         }
     ]
 }
