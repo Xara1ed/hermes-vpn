@@ -11,7 +11,7 @@
         },
         "streamSettings": {
             "network": "ws",
-            "wsSettings": {"path": "/api/v1"}
+            "wsSettings": {"path": "/api/v1", "headers": {"Host": "hermes-vpn-production.up.railway.app"}}
         }
     }],
     "outbounds": [{"protocol": "freedom"}]
