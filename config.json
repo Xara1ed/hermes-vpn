@@ -1,6 +1,6 @@
 {
     "log": {
-        "loglevel": "none"
+        "loglevel": "warning"
     },
     "inbounds": [
         {
@@ -11,7 +11,8 @@
             "settings": {
                 "clients": [
                     {
-                        "id": "9d509ca5-e544-46e4-be57-613b240299d1"
+                        "id": "9d509ca5-e544-46e4-be57-613b240299d1",
+                        "flow": ""
                     }
                 ],
                 "decryption": "none"
@@ -33,7 +34,21 @@
     ],
     "outbounds": [
         {
-            "protocol": "freedom"
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
         }
-    ]
+    ],
+    "routing": {
+        "rules": [
+            {
+                "type": "field",
+                "ip": ["geoip:cn", "geoip:ir"],
+                "outboundTag": "block"
+            }
+        ]
+    }
 }
