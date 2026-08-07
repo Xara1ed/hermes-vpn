@@ -1,5 +1,5 @@
 {
-    "log": {"loglevel": "debug"},
+    "log": {"loglevel": "none"},
     "inbounds": [{
         "tag": "proxy",
         "listen": "0.0.0.0",
@@ -12,7 +12,8 @@
         "streamSettings": {
             "network": "ws",
             "wsSettings": {"path": "/api/v1", "headers": {"Host": "hermes-vpn-production.up.railway.app"}}
-        }
+        },
+        "sniffing": {"enabled": true, "destOverride": ["http", "tls"]}
     }],
     "outbounds": [{"protocol": "freedom"}]
 }
