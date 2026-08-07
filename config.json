@@ -1,54 +1,70 @@
 {
-    "log": {
-        "loglevel": "warning"
-    },
-    "inbounds": [
-        {
-            "tag": "proxy",
-            "listen": "0.0.0.0",
-            "port": 8080,
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "9d509ca5-e544-46e4-be57-613b240299d1",
-                        "flow": ""
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "ws",
-                "wsSettings": {
-                    "path": "/api/v1",
-                    "headers": {
-                        "Host": "hermes-vpn-production.up.railway.app"
-                    }
-                }
-            },
-            "sniffing": {
-                "enabled": true,
-                "destOverride": ["http", "tls"]
-            }
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "proxy",
+      "listen": "0.0.0.0",
+      "port": 8080,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "9d509ca5-e544-46e4-be57-613b240299d1",
+            "flow": ""
+          },
+          {
+            "id": "5507994c-6095-49f0-ad51-73ce43216bf1",
+            "flow": ""
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/sg-melbi",
+          "headers": {
+            "Host": "hermes-vpn-production.up.railway.app"
+          }
         }
-    ],
-    "outbounds": [
-        {
-            "protocol": "freedom",
-            "tag": "direct"
-        },
-        {
-            "protocol": "blackhole",
-            "tag": "block"
-        }
-    ],
-    "routing": {
-        "rules": [
-            {
-                "type": "field",
-                "ip": ["geoip:cn", "geoip:ir"],
-                "outboundTag": "block"
-            }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
         ]
+      }
     }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "geoip:cn",
+          "geoip:ir"
+        ],
+        "outboundTag": "block"
+      },
+      {
+        "network": "udp",
+        "port": "443",
+        "outboundTag": "block",
+        "type": "field"
+      }
+    ]
+  }
 }
