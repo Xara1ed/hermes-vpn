@@ -9,4 +9,5 @@ RUN curl -sL https://github.com/XTLS/Xray-core/releases/latest/download/Xray-lin
     rm /tmp/x.zip
 COPY config.json /config.json
 EXPOSE 8080
+ENV PORT=8080
 CMD ["xray", "run", "-c", "/config.json"]
