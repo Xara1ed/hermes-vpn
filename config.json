@@ -1,84 +1,28 @@
 {
-  "log": {
-    "loglevel": "warning"
-  },
-  "inbounds": [
-    {
-      "tag": "proxy",
-      "listen": "0.0.0.0",
-      "port": 8080,
-      "protocol": "vless",
-      "settings": {
-        "clients": [
-          {
-            "id": "9d509ca5-e544-46e4-be57-613b240299d1",
-            "flow": ""
-          }
-        ],
-        "decryption": "none"
-      },
-      "streamSettings": {
-        "network": "ws",
-        "wsSettings": {
-          "path": "/sg-melbi",
-          "headers": {
-            "Host": "hermes-vpn-production.up.railway.app"
-          }
-        }
-      },
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
+    "log": {"loglevel": "warning"},
+    "inbounds": [{
+        "tag": "proxy",
+        "listen": "0.0.0.0",
+        "port": 8080,
+        "protocol": "vless",
+        "settings": {
+            "clients": [{"id": "9d509ca5-e544-46e4-be57-613b240299d1", "flow": ""}],
+            "decryption": "none"
+        },
+        "streamSettings": {
+            "network": "ws",
+            "wsSettings": {"path": "/sg-melbi", "headers": {"Host": "hermes-vpn-production.up.railway.app"}}
+        },
+        "sniffing": {"enabled": true, "destOverride": ["http", "tls"]}
+    }],
+    "outbounds": [
+        {"protocol": "freedom", "tag": "direct"},
+        {"protocol": "blackhole", "tag": "block"}
+    ],
+    "routing": {
+        "rules": [
+            {"type": "field", "ip": ["geoip:cn", "geoip:ir"], "outboundTag": "block"},
+            {"network": "udp", "port": "443", "outboundTag": "block", "type": "field"}
         ]
-      }
     }
-  ],
-  "outbounds": [
-    {
-      "protocol": "freedom",
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "tag": "block"
-    }
-  ],
-  "routing": {
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "geoip:cn",
-          "geoip:ir"
-        ],
-        "outboundTag": "block"
-      },
-      {
-        "network": "udp",
-        "port": "443",
-        "outboundTag": "block",
-        "type": "field"
-      },
-      {
-        "type": "field",
-        "domain": [
-          "instagram.com",
-          "youtube.com",
-          "googlevideo.com",
-          "google.com",
-          "ggpht.com",
-          "ytimg.com",
-          "notebooklm.google.com"
-        ],
-        "outboundTag": "proxy"
-      },
-      {
-        "type": "field",
-        "outboundTag": "direct"
-      }
-    ]
-  }
 }
