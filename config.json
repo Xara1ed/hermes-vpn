@@ -1,5 +1,5 @@
 {
-  "log": {"loglevel": "warning"},
+  "log": {"loglevel": "debug"},
   "inbounds": [{
     "tag": "proxy",
     "listen": "0.0.0.0",
